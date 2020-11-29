@@ -38,7 +38,7 @@ jsl(function(){
 		calc();
 	});
 	jsl('#accordion form').on('submit',function(ev){
-		var accordionData=jsl('#accordion form').formToObject();
+		var accordionData = jsl('#accordion form').formToObject();
 		if(!accordionData.onoffswitch){
 			delete accordionData['two-count'];
 			delete accordionData['two-diameter'];
@@ -114,7 +114,7 @@ jsl(function(){
 		jsl('[name="result"]').val(sum);
 	}
 	calc();
-},['DOMContentLoaded']);
+});
 }
 
 
@@ -382,15 +382,19 @@ for(let i = 0; i < form.length; i++) {
 		
 		if(target.matches('.phone-user')){
 			if (target.value.length > 15 && target.value.length != '' ){
-				target.value = target.value.replace(/[^+0-9]/gi, '');
-			}   
+				if (target.value.length > 15 && target.value.length != '' ){
+                    alert('введите правильный номер') ;
+                    target.value = '';
+                  }   
+            }   
+            target.value = target.value.replace(/[^+0-9]/gi, '');
 		}  
 		 
 		 });
 
  document.addEventListener('input', (event) => {
 	let target = event.target;
-	console.log(1); 
+
     if(target.matches('#name_1')) {
         target.value = target.value.replace(/[^-?!,.а-яё ]/iu, '');
     }
