@@ -135,26 +135,26 @@ popupDiscount.addEventListener('click', (event) => {
 
 
 // аккрдеон
-let panelBody = document.querySelectorAll('.panel-body');
-const accardion = document.querySelectorAll('.panel-default')
-accardion.forEach ((elem) =>{
-    elem.addEventListener('click', (event) => {
-        let target = event.target;
-        console.log(target);
-         if (target.classList.classList('panel-collapse in')){
-            target.classList.remove('panel-collapse  in');
-            panelBody.style.display = 'none';
+// let panelBody = document.querySelector('.panel-body');
+// const accardion = document.querySelectorAll('.panel-default')
+// accardion.forEach ((elem) =>{
+   document.addEventListener('click', (event) => {
+       
+    let target = event.target;
+        if (target.classList.contains('collapse in')){
+            console.log(target);
+            
         }
     //      else{
-    //         target.classList.remove('panel-collapse collapse in');
+    //         target.classList.remove('collapse collapse in');
 
     //      }
-    //      target.classList.add(' panel-collapse collapse in');
+    //      target.classList.add('collapse collapse in');
     //      panelBody.style.display = 'block';
     // })
 
 })
-});
+};
 
 // check Третье модально окно
 let check = document.querySelector('.check-btn'),
@@ -220,19 +220,28 @@ formPhone2 = document.getElementById('phone_1');
         }
     });
 
-
-
-
-
-
-
-
-
+// кнопка больше
+const newClass = () => {
+    const buttonMore =  document.querySelector('.add-sentence-btn')
+    const list =[...document.querySelectorAll('.sentence >.container >.text-center > .row >.col-md-4')]; 
+    console.log(list);
+    
+    list.forEach((x) => {
+        buttonMore.addEventListener('click',() =>{
+            x.classList.remove('hidden');
+            x.classList.remove('visible-sm-block');
+            buttonMore.style.display = 'none';
+        });
+        
+    });
 }
 
+
+// }
 
 
 
     
-
+// запуск функций
 togglePopUp();
+ newClass();
