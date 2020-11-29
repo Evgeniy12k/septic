@@ -1,4 +1,124 @@
 "use strict";
+const calcc = () =>{
+
+    
+
+jsl(function(){
+	function loadStatus(){
+		var status=jsl('[name="onoffswitch"]').prop('checked');
+		if(status){
+			jsl('.two-well').css('display','inline-block');
+		}else{
+			jsl('.two-well').css('display','none');
+		}
+	}
+	jsl('select').on('change',function(){
+		calc()
+	});
+	jsl('[name="onoffswitch"]').on('change',function(){
+		loadStatus();
+		calc()
+	});
+	jsl('[name="onoffswitch-two"]').on('change',function(){
+		calc()
+	});
+	loadStatus();
+	jsl('.panel-heading').on('click',function(ev){
+		jsl('.panel-collapse.collapse').forEach(function(el){
+			el.classList.remove('in');
+		});
+		ev.target.closest('.panel').children[1].classList.add('in');
+		calc()
+	});
+	jsl('[data-parent="#accordion"]').on('click',function(ev){
+		jsl('.panel-collapse.collapse').forEach(function(el){
+			el.classList.remove('in');
+		});
+		jsl(ev.currentTarget.hash).addClass('in');
+		calc();
+	});
+	jsl('#accordion form').on('submit',function(ev){
+		var accordionData=jsl('#accordion form').formToObject();
+		if(!accordionData.onoffswitch){
+			delete accordionData['two-count'];
+			delete accordionData['two-diameter'];
+		}
+		jsl.ajax({
+			url:ev.target.action,
+			type:'POST',
+			headers:{
+				'Content-Type':'application/json',
+			},
+			4:function(){
+				calc()
+			}
+		},accordionData);
+		ev.preventDefault();
+		return false;
+	});
+
+	function calc(){
+		let accordionData = jsl('#accordion form').formToObject();
+		if(!accordionData.onoffswitch){
+			delete accordionData['two-count'];
+			delete accordionData['two-diameter'];
+		}
+
+		let sum = 0;
+		// 1. Выбираем тип камеры, получаем сумму (10000 или 15000)
+		if(accordionData.onoffswitch){
+			sum = 10000;
+		}else{
+			sum = 15000;
+		}
+
+		// 2. Далее в зависимости от диаметра к сумме добавляем 20% (от суммы полученной выше)  (если 2метра)
+		if(accordionData['one-diameter'] == 2){
+			sum+=sum*.2;
+		}
+
+		if(accordionData.onoffswitch){
+			// 3. Далее добавляем к полученной выше сумме в зависимости от наличия колец у первого -  + 30% или 50 % от 10000
+			if(accordionData['one-count'] == 2){
+				sum+=.3*10000
+			}
+			if(accordionData['one-count'] == 3){
+				sum+=.5*10000
+			}
+			//  и в зависимости от наличия второй камеры и кол-ва колец в ней плюс 20% или 40% от 5000 
+			if(accordionData['two-count'] == 2){
+				sum+=.2*5000
+			}
+			if(accordionData['two-count'] == 3){
+				sum+=.4*5000
+			}
+
+		}else{
+			// 3. Далее добавляем к полученной выше сумме в зависимости от наличия колец у первого -  + 30% или 50 % от 10000
+			if(accordionData['one-count'] == 2){
+				sum += .3*10000
+			}
+			if(accordionData['one-count'] == 3){
+				sum+=.5*10000
+			}
+			
+		}
+
+		// 4. В зависимости от наличия днища и количества камер (если нету днища, то не добавляем) добавляем 10% или 20% от полученной суммы выше
+		if(accordionData['onoffswitch-two']){
+			if(accordionData['two-count'])
+				sum += sum *.1;
+			else
+				sum += sum *.2;
+		}
+		jsl('[name="result"]').val(sum);
+	}
+	calc();
+},['DOMContentLoaded']);
+}
+
+
+
 const togglePopUp = () => {
     const popupCall = document.querySelector('.popup-call');
       let callBtn = document.querySelectorAll('.call-btn');
@@ -8,8 +128,8 @@ const togglePopUp = () => {
         // первое модальное окно
       callBtn.forEach((elem) => {
     elem.addEventListener('click', () => {
-        if(window.innerWidth > 768){
-            popupCall.style.opacity = '0'; 
+        if(popupCall.style.opacity = '0'){
+          
             let n = 0;
             const timer = setInterval(() => { 
                 n += 0.1;
@@ -72,8 +192,8 @@ popupCall.addEventListener('click', (event) => {
 
 discountBtn.forEach((elem) => {
     elem.addEventListener('click', () => {
-        if(window.innerWidth > 768){
-            popupDiscount.style.opacity = '0'; 
+        if(popupDiscount.style.opacity = '0'){
+            
             let n = 0;
             const timer = setInterval(() => { 
                 n += 0.1;
@@ -102,8 +222,7 @@ popupDiscount.addEventListener('click', (event) => {
 
    
     if(target.classList.contains('popup-close', 'popup-call popup')){
-        if(window.innerWidth > 768){
-            popupDiscount.style.opacity = '1';
+        if(popupDiscount.style.opacity = '1'){
             let n = 1;
             const timer = setInterval(() => {
                 n-= 0.1;
@@ -132,29 +251,6 @@ popupDiscount.addEventListener('click', (event) => {
     }
 });
 
-
-
-// аккрдеон
-// let panelBody = document.querySelector('.panel-body');
-// const accardion = document.querySelectorAll('.panel-default')
-// accardion.forEach ((elem) =>{
-   document.addEventListener('click', (event) => {
-       
-    let target = event.target;
-        if (target.classList.contains('collapse in')){
-            console.log(target);
-            
-        }
-    //      else{
-    //         target.classList.remove('collapse collapse in');
-
-    //      }
-    //      target.classList.add('collapse collapse in');
-    //      panelBody.style.display = 'block';
-    // })
-
-})
-};
 
 // check Третье модально окно
 let check = document.querySelector('.check-btn'),
@@ -190,8 +286,8 @@ formPhone2 = document.getElementById('phone_1');
     
        
         if(target.classList.contains('popup-close', 'popup-call popup')){
-            if(window.innerWidth > 768){
-                popupCheck.style.opacity = '1';
+            if(popupCheck.style.opacity = '1'){
+                
                 let n = 1;
                 const timer = setInterval(() => {
                     n-= 0.1;
@@ -219,12 +315,12 @@ formPhone2 = document.getElementById('phone_1');
             }
         }
     });
-
+}
 // кнопка больше
 const newClass = () => {
     const buttonMore =  document.querySelector('.add-sentence-btn')
     const list =[...document.querySelectorAll('.sentence >.container >.text-center > .row >.col-md-4')]; 
-    console.log(list);
+
     
     list.forEach((x) => {
         buttonMore.addEventListener('click',() =>{
@@ -234,14 +330,111 @@ const newClass = () => {
         });
         
     });
-}
-
-
-// }
+};
 
 
 
+
+const sendForm = () => {
+
+    const errorMessage = 'Что-то пошло  не так..',
+          loadMessage = 'Загрузка.',
+          successMessage = ' Спасибо! мы скоро с вами свяжемся!';
+    const form = document.querySelectorAll('form');
+    const input = document.querySelectorAll('input');
+
+// обработчик события для кнопки форм
+for(let i = 0; i < form.length; i++) {
+    form[i].addEventListener('submit', (event) =>{
+        event.preventDefault();
+        
+    form[i].appendChild(statusMessage);//добавление элемента
+//  статут загрузки 
+        statusMessage.textContent = loadMessage;
+// запрос к серверу
+        
+	const formData = new FormData(form[i]);
+		
+	let body = {};
+	
+
+	formData.forEach((val, key) => {
+		body[key] = val;
+	});
+	// 
+	postData(body, () =>{
+		statusMessage.textContent = successMessage;
+	//    очищаем все input 
+		input.forEach((elem) => {
+			elem.value = "";
+			});
+	}, (error) =>{
+		statusMessage.textContent = errorMessage;
+	console.error(error);
+	});
+	});
+	}
+
+
+	document.addEventListener('input', (event) => {
     
+		let target = event.target; 
+		
+		if(target.matches('.phone-user')){
+			if (target.value.length > 15 && target.value.length != '' ){
+				target.value = target.value.replace(/[^+0-9]/gi, '');
+			}   
+		}  
+		 
+		 });
+
+ document.addEventListener('input', (event) => {
+	let target = event.target;
+	console.log(1); 
+    if(target.matches('#name_1')) {
+        target.value = target.value.replace(/[^-?!,.а-яё ]/iu, '');
+    }
+});
+// проверяем строки Input на правильный ввод числа
+
+
+     const statusMessage = document.createElement('div'); 
+    statusMessage.style.cssText = 'color: green';
+	
+    const postData = (body, outputData, errorData) => {
+        const request = new XMLHttpRequest;
+
+        request.addEventListener('readystatechange', () => {
+           
+    // проверка статуса
+            if(request.readyState !== 4) {
+                return;// выход из функции
+            }
+            if(request.status === 200) {
+                outputData();
+            }else {
+                errorData(request.status);
+            }
+    
+            });
+
+// настройка соединения
+        request.open('POST', './server.php');
+// настрока заголовка
+        request.setRequestHeader('Content-Type', 'application/json');
+         
+// получение данных 
+      
+// при работе с Json формате
+         request.send(JSON.stringify(body));
+    }
+
+     
+};
+
+
 // запуск функций
-togglePopUp();
- newClass();
+	togglePopUp();
+	newClass();
+	sendForm();
+	calcc();
