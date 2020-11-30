@@ -25,17 +25,22 @@ jsl(function(){
 	loadStatus();
 	jsl('.panel-heading').on('click',function(ev){
 		jsl('.panel-collapse.collapse').forEach(function(el){
-			el.classList.remove('in');
+            el.classList.remove('in');
+            
 		});
 		ev.target.closest('.panel').children[1].classList.add('in');
-		calc()
+        calc()
+        ev.preventDefault();
+		return false;
 	});
 	jsl('[data-parent="#accordion"]').on('click',function(ev){
 		jsl('.panel-collapse.collapse').forEach(function(el){
 			el.classList.remove('in');
 		});
 		jsl(ev.currentTarget.hash).addClass('in');
-		calc();
+        calc();
+        ev.preventDefault();
+		return false;
 	});
 	jsl('#accordion form').on('submit',function(ev){
 		var accordionData = jsl('#accordion form').formToObject();
