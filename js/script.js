@@ -312,7 +312,7 @@ formPhone2 = document.getElementById('phone_1');
             if(!target){
                 popupCheck.style.display = 'none';
                 formName2.value = '';
-                 formPhone2.value = '';
+                 formPhone2.value = ''
             }
         }
     });
