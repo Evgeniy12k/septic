@@ -118,7 +118,7 @@ jsl(function(){
 }
 
 
-
+// модальное окно
 const togglePopUp = () => {
     const popupCall = document.querySelector('.popup-call');
       let callBtn = document.querySelectorAll('.call-btn');
@@ -251,12 +251,13 @@ popupDiscount.addEventListener('click', (event) => {
     }
 });
 
+ let consultationBtn = document.querySelector('.consultation-btn');
 
 // check Третье модально окно
 let check = document.querySelector('.check-btn'),
         popupCheck = document.querySelector('.popup-check');
-
-    check.addEventListener('click', () => {
+       
+check.addEventListener('click', () => {
         
         if(popupCheck.style.opacity === '0'){
              
@@ -334,7 +335,7 @@ const newClass = () => {
 
 
 
-
+// форма
 const sendForm = () => {
 
     const errorMessage = 'Что-то пошло  не так..',
@@ -375,7 +376,7 @@ for(let i = 0; i < form.length; i++) {
 	});
 	}
 
-
+// проверка полей
 	document.addEventListener('input', (event) => {
     
 		let target = event.target; 
