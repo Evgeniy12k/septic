@@ -308,7 +308,7 @@ formPhone2 = document.getElementById('phone_1');
                 popupCheck.style.display = 'none';
             }
         }else {
-            target = target.closest('.popup-check popup');
+            target = target.closest('.popup-check');
             if(!target){
                 popupCheck.style.display = 'none';
                 formName2.value = '';
