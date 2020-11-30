@@ -279,8 +279,8 @@ check.addEventListener('click', () => {
         }
     });
 
-    const formName2 = document.getElementById('name_1'),
-formPhone2 = document.getElementById('phone_1');
+    const formName2 = document.getElementById('name_12'),
+formPhone2 = document.getElementById('phone_12');
     // закрываем модалку
     popupCheck.addEventListener('click', (event) => {
         let target = event.target;
@@ -308,7 +308,7 @@ formPhone2 = document.getElementById('phone_1');
                 popupCheck.style.display = 'none';
             }
         }else {
-            target = target.closest('.popup-check');
+            target = target.closest('.popup-content');
             if(!target){
                 popupCheck.style.display = 'none';
                 formName2.value = '';
