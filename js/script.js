@@ -163,8 +163,8 @@ popupCall.addEventListener('click', (event) => {
 
    
     if(target.classList.contains('popup-close', 'popup-call popup')){
-        if(window.innerWidth > 768){
-            popupCall.style.opacity = '1';
+        if( popupCall.style.opacity = '1'){
+            
             let n = 1;
             const timer = setInterval(() => {
                 n-= 0.1;
@@ -321,6 +321,11 @@ formPhone2 = document.getElementById('phone_12');
             }
         }
     });
+
+    
+
+
+
 }
 // кнопка больше
 const newClass = () => {
@@ -337,6 +342,79 @@ const newClass = () => {
         
     });
 };
+
+
+// модальное окно Консультация.  
+const helpConsul = () => {
+    let consultation  = document.querySelector('.popup-consultation'),
+    btnConsultation = document.querySelector('.consultation-btn');   
+   
+btnConsultation.addEventListener('click', () => {
+        
+        if(consultation.style.opacity === '0'){
+             
+            let n = 0;
+            const timer = setInterval(() => { 
+                n += 0.1;
+                consultation.style.opacity = `${n}`;
+    //  останавливаем таймер
+                if (consultation.style.opacity === '1') {
+                    clearInterval(timer);
+                }
+
+            }, 40);
+            consultation.style.display = 'block';
+            
+        }else{
+            consultation.style.display = 'block';
+            consultation.style.opacity = '1';
+        }
+    });
+
+    const formName3 = document.getElementById('name_13'),
+    formPhone3 = document.getElementById('phone_13');
+    // закрытие
+
+    consultation.addEventListener('click', (event) => {
+        let target = event.target;
+    
+       
+        if(target.classList.contains('popup-close', 'popup-consultation popup')){
+            if(consultation.style.opacity = '1'){
+                
+                let n = 1;
+                const timer = setInterval(() => {
+                    n-= 0.1;
+                    consultation.style.opacity = `${n}`;
+    
+                    if (  consultation.style.opacity === '-0.1') {
+                        // очищение полей
+                        formName3.value = '';
+                        formPhone3.value = '';
+                        consultation.style.display = 'none';
+                        clearInterval(timer);
+                    }
+    
+                }, 40);
+                
+            }else{
+                consultation.style.display = 'none';
+            }
+        }else {
+            target = target.closest('.popup-content');
+            if(!target){
+                consultation.style.display = 'none';
+                formName3.value = '';
+                 formPhone3.value = ''
+            }
+        }
+    });
+
+
+
+    
+    };
+
 
 
 
@@ -387,7 +465,7 @@ for(let i = 0; i < form.length; i++) {
 		let target = event.target; 
 		
 		if(target.matches('.phone-user')){
-			if (target.value.length > 15 && target.value.length != '' ){
+			if (target.value.length > 5 && target.value.length != '' ){
 				if (target.value.length > 15 && target.value.length != '' ){
                     alert('введите правильный номер') ;
                     target.value = '';
@@ -401,9 +479,14 @@ for(let i = 0; i < form.length; i++) {
  document.addEventListener('input', (event) => {
 	let target = event.target;
 
-    if(target.matches('#name_1')) {
-        target.value = target.value.replace(/[^-?!,.а-яё ]/iu, '');
+    if(target.matches('input[name$="user_name"]')) {
+        if (target.value.length > 20 && target.value.length != '' ){
+            alert('слишком много') ;
+            target.value = '';
+          }   
+          target.value = target.value.replace(/[^-?!,.а-яё ]/iu, '');
     }
+    
 });
 // проверяем строки Input на правильный ввод числа
 
@@ -447,4 +530,5 @@ for(let i = 0; i < form.length; i++) {
 	togglePopUp();
 	newClass();
 	sendForm();
-	calcc();
+    calcc();
+    helpConsul();
