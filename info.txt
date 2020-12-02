@@ -1,3 +1,31 @@
-
+ setTimeout(() => {
+                    
+                    popup.style.display = 'none';
+                 },3000);
+                 
+postData(body, () =>{
+        statusMessage.textContent = successMessage;
+    
+                      setTimeout(() => {
+                      statusMessage.textContent = '';
+                     
+                   },1000);
+                  
+                   setTimeout(() => {
+                    
+                    popup.style.display = 'none';
+                 },3000);
+	//    очищаем все input 
+		input.forEach((elem) => {
+			elem.value = "";
+			});
+	}, (error) =>{
+		statusMessage.textContent = errorMessage;
+    console.error(error);
+    
+    
+	});
+	});
+	}
 
 

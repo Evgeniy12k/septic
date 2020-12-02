@@ -32,7 +32,7 @@ const  sale = () =>{
         
            
             if(target.classList.contains('popup-close', 'popup-call popup')){
-                if(popupCheck.style.opacity = '1'){
+                if(popupCheck.style.opacity === '1'){
                     
                     let n = 1;
                     const timer = setInterval(() => {
