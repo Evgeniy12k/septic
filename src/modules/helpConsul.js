@@ -4,7 +4,7 @@ const helpConsul = () => {
    
 btnConsultation.addEventListener('click', () => {
     const questionInput = document.querySelector('.director-form input[name="user_quest"]');
-    const inputInPopup = popupConsult.querySelector('[name="user_quest"]');
+    const inputInPopup = consultation.querySelector('[name="user_quest"]');
     if (questionInput && inputInPopup) {
         inputInPopup.value = questionInput.value;
     };
