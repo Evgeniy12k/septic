@@ -3,7 +3,11 @@ const helpConsul = () => {
     btnConsultation = document.querySelector('.consultation-btn');   
    
 btnConsultation.addEventListener('click', () => {
-        
+    const questionInput = document.querySelector('.director-form input[name="user_quest"]');
+    const inputInPopup = popupConsult.querySelector('[name="user_quest"]');
+    if (questionInput && inputInPopup) {
+        inputInPopup.value = questionInput.value;
+    };
         if(consultation.style.opacity === '0'){
              
             let n = 0;

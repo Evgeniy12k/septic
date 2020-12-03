@@ -11,6 +11,10 @@ for(let i = 0; i < form.length; i++) {
     form[i].addEventListener('submit', (event) =>{
         event.preventDefault();
         
+            if (event.target.closest('.director-form')) {
+                event.preventDefault();
+                return;
+            }
     form[i].appendChild(statusMessage);//добавление элемента
 //  статут загрузки 
         statusMessage.textContent = loadMessage;
@@ -21,7 +25,15 @@ const formData = new FormData(form[i]);
 let body = {};
 formData.forEach((val, key) => {
     body[key] = val;
+
+
+
+
 });
+
+// не отправляем данные
+
+
 // 
 postData(body)
     .then((response) => {
@@ -38,9 +50,19 @@ postData(body)
                 .forEach(x => (x.style.display = " none "));
              },3000);
           
-                    
+              document.querySelector('.user_quest');
+
+             
+
+
+
          input.forEach((elem) => {
-			elem.value = "";
+            elem.value = "";
+           if (elem ===elem.matches('input[name$="user_quest"]')){
+               input.textContent = elem.value;
+           }
+          
+            
 			});
      })
      .catch((error) => {
@@ -49,10 +71,10 @@ postData(body)
       });
       
 
- }
+ });
 
-);
-}
+    
+
 document.addEventListener('input', (event) => {
     
     let target = event.target; 
@@ -90,7 +112,7 @@ if(target.matches('input[name$="user_name"]')) {
  
  
 };
-
+}
 
 const statusMessage = document.createElement('div'); 
 statusMessage.style.cssText = 'color: green';
